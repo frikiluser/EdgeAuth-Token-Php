@@ -35,14 +35,16 @@
 class Akamai_EdgeAuth_Generate
 {
 
-    protected function h2b($str)
+    protected function h2b(string $str) : string
     {
-        $bin = "";
-        $i = 0;
-        do {
-            $bin .= chr(hexdec($str{$i}.$str{($i + 1)}));
-            $i += 2;
-        } while ($i < strlen($str));
+        if (strlen($str)<2) {
+            return '';
+        }
+
+        $bin = '';
+        foreach (range(0, (strlen($str)/2)-1) as $i) {
+            $bin .= chr(hexdec($str[$i*2] . $str[$i*2 + 1]));
+        }
         return $bin;
     }
 
